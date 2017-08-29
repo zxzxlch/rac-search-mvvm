@@ -40,11 +40,47 @@ class SearchTableViewModel {
         
         let searchResultsSignal: Signal<[String], NoError> = parsedQuerySignal
             .throttle(0.3, on: QueueScheduler.main)
-            .map { query in
+            .flatMap(.latest) { query -> SignalProducer<[String], NoError> in
                 guard let query = query else {
-                    return ["0 results found"]
+                    return SignalProducer(value: [])
                 }
-                return [query]
+                
+                let searchResultsProducer = SignalProducer<[String], AnyError> { observer, lifetime in
+                    // Start new search request
+                    let request = MKLocalSearchRequest()
+                    request.naturalLanguageQuery = query
+                    let search = MKLocalSearch(request: request)
+                    
+                    search.start { response, error in
+                        guard let response = response else {
+                            // Send error
+                            let defaultError = NSError(domain: "com.example.rac-search-mvvm", code: 0, userInfo: [NSLocalizedDescriptionKey: "Failed to complete search request"])
+                            observer.send(error: AnyError(error ?? defaultError))
+                            return
+                        }
+                        
+                        // Send place names in search results
+                        let results: [String] = response.mapItems.map { $0.name ?? "[Unknown]" }
+                        observer.send(value: results)
+                        observer.sendCompleted()
+                    }
+                    
+                    // Cancel ongoing search if replaced by new search
+                    lifetime.observeEnded {
+                        guard search.isSearching else { return }
+                        print("Previous search canceled: \(query)")
+                        search.cancel()
+                    }
+                }
+                
+                // Catch any error so that stream will not terminate
+                return searchResultsProducer.flatMapError { error -> SignalProducer<[String], NoError> in
+                    // Output error
+                    print(error)
+                    
+                    // Replace error with an error message
+                    return SignalProducer(value: ["Unable to search. Please try again."])
+                }
             }
         
         sectionsProperty <~ searchResultsSignal.map { [$0] }
