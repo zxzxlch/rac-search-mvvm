@@ -14,9 +14,14 @@ import Result
 
 class SearchTableViewModel {
     private let sectionsProperty = MutableProperty<[[String]]>([])
+    let searchQueryProperty = MutableProperty<String?>(nil)
     
     var sections: [[String]] {
         return sectionsProperty.value
+    }
+    
+    var sectionsSignal: Signal<[[String]], NoError> {
+        return sectionsProperty.signal
     }
     
     init() {
@@ -24,7 +29,21 @@ class SearchTableViewModel {
     }
     
     private func setupBindings() {
-        sectionsProperty <~ SignalProducer<[[String]], NoError>(value: [["One", "Two", "Three"]])
+        // Trim search query
+        let parsedQuerySignal: Signal<String?, NoError> = searchQueryProperty.signal.map { value in
+            if let trimmed = value?.trimmingCharacters(in: .whitespaces) {
+                // Return nil if empty
+                return trimmed.isEmpty ? nil : trimmed
+            }
+            return nil
+        }
+        
+        sectionsProperty <~ parsedQuerySignal.map { query in
+            guard let query = query else {
+                return [["0 results found"]]
+            }
+            return [[query]]
+        }
     }
     
     func cellData(for indexPath: IndexPath) -> String {

@@ -30,7 +30,12 @@ class SearchTableViewController: UITableViewController {
     }
     
     private func setupBindings() {
+        viewModel.searchQueryProperty <~ searchBar.reactive.continuousTextValues
         
+        // Reload with updated results
+        viewModel.sectionsSignal.observeValues { [unowned self] _ in
+            self.tableView.reloadData()
+        }
     }
     
     
