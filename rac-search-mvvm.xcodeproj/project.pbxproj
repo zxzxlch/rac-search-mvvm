@@ -15,6 +15,7 @@
 		61B74B801F55577D00A69BCB /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B74B7D1F55577D00A69BCB /* ReactiveCocoa.framework */; };
 		61B74B811F55577D00A69BCB /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B74B7E1F55577D00A69BCB /* ReactiveSwift.framework */; };
 		61B74B821F55577D00A69BCB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61B74B7F1F55577D00A69BCB /* Result.framework */; };
+		61B74B851F555B3100A69BCB /* SearchTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61B74B841F555B3100A69BCB /* SearchTableViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		61B74B7D1F55577D00A69BCB /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
 		61B74B7E1F55577D00A69BCB /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
 		61B74B7F1F55577D00A69BCB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
+		61B74B841F555B3100A69BCB /* SearchTableViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 			children = (
 				61B74B681F5556BB00A69BCB /* AppDelegate.swift */,
 				61B74B7A1F55574E00A69BCB /* SearchTableViewController.swift */,
+				61B74B841F555B3100A69BCB /* SearchTableViewModel.swift */,
 				61B74B6C1F5556BB00A69BCB /* Main.storyboard */,
 				61B74B6F1F5556BB00A69BCB /* Assets.xcassets */,
 				61B74B711F5556BB00A69BCB /* LaunchScreen.storyboard */,
@@ -179,6 +182,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61B74B851F555B3100A69BCB /* SearchTableViewModel.swift in Sources */,
 				61B74B7B1F55574E00A69BCB /* SearchTableViewController.swift in Sources */,
 				61B74B691F5556BB00A69BCB /* AppDelegate.swift in Sources */,
 			);
@@ -352,6 +356,7 @@
 				61B74B791F5556BB00A69BCB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

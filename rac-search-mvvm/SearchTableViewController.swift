@@ -3,7 +3,6 @@
 //  learn-reactivecocoa
 //
 //  Created by Benjamin C on 29/8/17.
-//  Copyright © 2017 Benjamin Cheah. All rights reserved.
 //
 
 import UIKit
@@ -12,6 +11,7 @@ import ReactiveSwift
 import Result
 
 class SearchTableViewController: UITableViewController {
+    private let viewModel = SearchTableViewModel()
     
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
@@ -29,8 +29,20 @@ class SearchTableViewController: UITableViewController {
         setupBindings()
     }
     
-    func setupBindings() {
+    private func setupBindings() {
         
+    }
+    
+    
+    // MARK: - Table View
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 0
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        return cell
     }
     
 }
