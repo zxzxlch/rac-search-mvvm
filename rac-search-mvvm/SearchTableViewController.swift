@@ -36,12 +36,19 @@ class SearchTableViewController: UITableViewController {
     
     // MARK: - Table View
     
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.sections.count
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return viewModel.sections[section].count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        cell.textLabel?.text = viewModel.cellData(for: indexPath)
+        
         return cell
     }
     
