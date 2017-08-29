@@ -38,12 +38,16 @@ class SearchTableViewModel {
             return nil
         }
         
-        sectionsProperty <~ parsedQuerySignal.map { query in
-            guard let query = query else {
-                return [["0 results found"]]
+        let searchResultsSignal: Signal<[String], NoError> = parsedQuerySignal
+            .throttle(0.3, on: QueueScheduler.main)
+            .map { query in
+                guard let query = query else {
+                    return ["0 results found"]
+                }
+                return [query]
             }
-            return [[query]]
-        }
+        
+        sectionsProperty <~ searchResultsSignal.map { [$0] }
     }
     
     func cellData(for indexPath: IndexPath) -> String {
