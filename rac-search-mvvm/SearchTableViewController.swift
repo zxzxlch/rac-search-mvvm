@@ -16,12 +16,13 @@ class SearchTableViewController: UITableViewController {
     lazy var searchBar: UISearchBar = {
         let searchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 320, height: 44))
         searchBar.placeholder = "Search places"
-        searchBar.showsCancelButton = true
         return searchBar
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.keyboardDismissMode = .onDrag
         
         navigationItem.titleView = searchBar
         
